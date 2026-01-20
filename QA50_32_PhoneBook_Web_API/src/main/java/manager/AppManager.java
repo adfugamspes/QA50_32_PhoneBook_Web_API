@@ -14,16 +14,16 @@ public class AppManager {
         return driver;
     }
 
-    @BeforeMethod(enabled = false)
+    @BeforeMethod
     public void setup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+//        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
     }
 
     // (@BeforeMethod) setup -->  (@Test) testName --> (@AfterMethod)
 
-    @AfterMethod
+    @AfterMethod(enabled = false)
     public void tearDown() {
         if(driver != null)
             driver.quit();
