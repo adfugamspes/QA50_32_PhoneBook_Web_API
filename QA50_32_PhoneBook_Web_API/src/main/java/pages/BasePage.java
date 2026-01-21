@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public abstract class BasePage {
     static WebDriver driver;
@@ -17,4 +18,7 @@ public abstract class BasePage {
         }
     }
 
+    public boolean isElementDisplayed(WebElement element){
+        return element.isDisplayed();
+    }
 }
