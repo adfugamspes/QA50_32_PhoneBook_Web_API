@@ -25,17 +25,10 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//button[text()='Registration']")
     WebElement btnRegistrationForm;
 
-    @FindBy(xpath = "//button[text()='Sign Out']")
-    WebElement btnSignOut;
-
-    @FindBy(xpath = "//a[text()='ADD']")
-    WebElement btnAddContact;
-
     public void typeLoginRegistrationForm (String email, String password){
         inputEmail.sendKeys(email);
         inputPassword.sendKeys(password);
     }
-
 
     public void typeLoginRegistrationFormWithUser(User user){
         inputEmail.sendKeys(user.getUsername());
@@ -53,13 +46,6 @@ public class LoginPage extends BasePage{
     }
 
 
-    public boolean isBtnSignOutDisplayed(){
-        return isElementDisplayed(btnSignOut);
-    }
 
-
-    public boolean isBtnAddContactDisplayed(){
-        return isElementDisplayed(btnAddContact);
-    }
 
 }
