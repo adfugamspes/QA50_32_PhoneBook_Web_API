@@ -41,4 +41,8 @@ public class ContactsPage extends BasePage {
     public boolean isTextInContactPageMessagePresent (String text){
         return isTextInElementPresent(contactPageMessage, text);
     }
+
+    public void clickBtnSignOut(){
+        btnSignOut.click();
+    }
 }

@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/QA50_32_PhoneBook_Web_API.iml" filepath="$PROJECT_DIR$/.idea/QA50_32_PhoneBook_Web_API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.QA50_32_PhoneBook_Web_API.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.QA50_32_PhoneBook_Web_API.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.QA50_32_PhoneBook_Web_API.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.QA50_32_PhoneBook_Web_API.test.iml" />
     </modules>
   </component>
 </project>
