@@ -31,7 +31,7 @@ public class AddContactPage extends BasePage{
     @FindBy(xpath = "//div[@class='add_form__2rsm2']/input[6]")
     WebElement inputDescription;
 
-    @FindBy(xpath = "//button/b")
+    @FindBy(xpath = "//b[text()='Save']/..")
     WebElement btnSaveContact;
 
     public void typeContactForm(Contact contact){
