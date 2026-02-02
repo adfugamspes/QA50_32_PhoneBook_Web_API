@@ -35,7 +35,7 @@ public class RegistrationTests extends AppManager {
     }
 
     @Test
-    public void registrationPositiveTestWIthFaker() {
+    public void registrationPositiveTest_WithFaker() {
         User user = positiveUser();
         System.out.println(user);
         loginPage.typeLoginRegistrationFormWithUser(user);
@@ -45,171 +45,192 @@ public class RegistrationTests extends AppManager {
 
     @Test
     public void registrationNegativeTest_BlankEmail() {
-        User user = negativeBlankEmail();
+        User user = positiveUser();
+        user.setUsername("");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_BlankEmailAndPassword() {
-        User user = negativeBlankEmailAndPassword();
+        User user = positiveUser();
+        user.setUsername("");
+        user.setPassword("");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_OnlySpacesEmail() {
-        User user = negativeOnlySpacesEmail();
+        User user = positiveUser();
+        user.setUsername("   ");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_2AtSignsInEmail() {
-        User user = negative2AtSignsInEmail();
+        User user = positiveUser();
+        user.setUsername("testingmail123@@mail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_2AtSignsLettersBetweenEmail() {
-        User user = negative2AtSignsLettersBetweenEmail();
+        User user = positiveUser();
+        user.setUsername("testingmail123@test@mail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_NoLettersBeforeAtSignEmail() {
-        User user = negativeNoLettersBeforeAtSignEmail();
+        User user = positiveUser();
+        user.setUsername("@mail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_NoLettersAfterAtSignEmail() {
-        User user = negativeNoLettersAfterAtSignEmail();
+        User user = positiveUser();
+        user.setUsername("testingmail123@");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_OnlyCyrillicLettersEmail_BUG() {
-        User user = negativeOnlyCyrillicLettersEmail();
+        User user = positiveUser();
+        user.setUsername("абракадабрас@мейл.ру");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
     public void registrationNegativeTest_LatinAndCyrillicLettersEmail_BUG() {
-        User user = negativeLatinAndCyrillicLettersEmail();
+        User user = positiveUser();
+        user.setUsername("абракадабра@gmail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
     @Test
-    public void registrationNegativeTest_blankPassword() {
-        User user = negativeBlankPassword();
+    public void registrationNegativeTest_BlankPassword() {
+        User user = positiveUser();
+        user.setPassword("");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_onlySpacesPassword() {
-        User user = negativeOnlySpacesPassword();
+    public void registrationNegativeTest_OnlySpacesPassword() {
+        User user = positiveUser();
+        user.setPassword("   ");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_noSpecialCharsPassword() {
-        Faker faker = new Faker();
-        User user = new User(faker.internet().emailAddress(), "Password123");
+    public void registrationNegativeTest_NoSpecialCharsPassword() {
+        User user = positiveUser();
+        user.setPassword("Password123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_wrongSpecialCharPassword() {
-        User user = negativeNoSpecialCharsPassword();
+    public void registrationNegativeTest_WrongSpecialCharPassword() {
+        User user = positiveUser();
+        user.setPassword("Password)123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_cyrillicLettersPassword() {
-        User user = negativeCyrillicLettersPassword();
+    public void registrationNegativeTest_CyrillicLettersPassword() {
+        User user = positiveUser();
+        user.setPassword("Пароль!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_cyrillicAndEnglishLettersPassword_BUG() {
-        User user = negativeCyrillicAndEnglishLettersPassword();
+    public void registrationNegativeTest_CyrillicAndLatinLettersPassword_BUG() {
+        User user = positiveUser();
+        user.setPassword("Парjkm!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_latinWithSerifPassword_BUG() {
-        User user = negativeLatinWithSerifPassword();
+    public void registrationNegativeTest_LatinWithSerifPassword_BUG() {
+        User user = positiveUser();
+        user.setPassword("Password!123ł");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_noUppercasePassword() {
-        User user = negativeNoUppercasePassword();
+    public void registrationNegativeTest_NoUppercasePassword() {
+        User user = positiveUser();
+        user.setPassword("password!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_noLowercasePassword() {
-        User user = negativeNoLowercasePassword();
+    public void registrationNegativeTest_NoLowercasePassword() {
+        User user = positiveUser();
+        user.setPassword("PASSWORD!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
-    public void registrationNegativeTest_noNumbersPassword() {
-        User user = negativeNoNumbersPassword();
+    public void registrationNegativeTest_NoNumbersPassword() {
+        User user = positiveUser();
+        user.setPassword("Password!no");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
     public void registrationNegativeTest_7SymbolsPassword() {
-        User user = negative7SymbolsPassword();
+        User user = positiveUser();
+        user.setPassword("Pass!12");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test
     public void registrationNegativeTest_16SymbolsPassword_BUG() {
-        User user = negative16SymbolsPassword();
+        User user = positiveUser();
+        user.setPassword("Password!123jdki");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnRegistration();
-        Assert.assertTrue(loginPage.isAlertContainsText("Email must contains"));
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Password must contain"));
     }
 
     @Test

@@ -57,11 +57,4 @@ public class LoginPage extends BasePage{
         return text;
     }
 
-    public boolean isAlertContainsText(String text){
-        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
-        String fullAlertText = alert.getText();
-        alert.accept();
-        return fullAlertText.contains(text);
-    }
-
 }

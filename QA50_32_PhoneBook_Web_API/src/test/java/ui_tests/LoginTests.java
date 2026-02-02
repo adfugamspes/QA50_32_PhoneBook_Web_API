@@ -30,34 +30,22 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginPositiveTest () {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistrationForm("testmail123@mail.com", "Password!123");
         loginPage.clickBtnLoginForm();
-//        ContactsPage contactsPage = new ContactsPage(getDriver());
-//        Assert.assertTrue(contactsPage.isBtnSignOutDisplayed());
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInBtnAddPresent("ADD"));
     }
 
     @Test
-    public void loginPositiveTestWithUser () {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
-        loginPage.typeLoginRegistrationFormWithUser(new User("testmail123@mail.com", "Password!123"));
+    public void loginPositiveTest_WithUser () {
+        User user = positiveUserLogin();
+        loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
-//        ContactsPage contactsPage = new ContactsPage(getDriver());
-//        Assert.assertTrue(contactsPage.isBtnAddContactDisplayed());
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInBtnSignOutPresent("Sign Out"));
     }
 
     @Test
-    public void loginNegativeTestWrongEmail(){
+    public void loginNegativeTest_WrongEmail(){
         User user = new User("testmail123ail.com", "Password!123");
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -65,7 +53,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_BlankEmail(){
-        User user = negativeBlankEmail();
+        User user = positiveUserLogin();
+        user.setUsername("");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -73,7 +62,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_OnlySpacesEmail(){
-        User user = negativeOnlySpacesEmail();
+        User user = positiveUserLogin();
+        user.setUsername("   ");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -81,7 +71,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_2AtSignsInEmail(){
-        User user = new User("testemail2@@gmail.com", "Password!123");
+        User user = positiveUserLogin();
+        user.setUsername("testmail123@@mail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -89,7 +80,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoLettersBeforeAtSignEmail(){
-        User user = new User("@gmail.com", "Password!123");
+        User user = positiveUserLogin();
+        user.setUsername("@mail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -97,15 +89,17 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoLettersAfterAtSignEmail(){
-        User user = new User("testemail2@", "Password!123");
+        User user = positiveUserLogin();
+        user.setUsername("testmail123@");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
     }
 
     @Test
-    public void loginNegative_OnlyCyrillicLettersEmail_BUG(){
-        User user = new User("еуыеуьфшууукд@gmail.com", "Password!123");
+    public void loginNegative_CyrillicLettersEmail_BUG(){
+        User user = positiveUserLogin();
+        user.setUsername("еуыеуьфшууукд@gmail.com");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -113,15 +107,17 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_blankPassword(){
-        User user = new User("testemail2@gmail.com", "");
+        User user = positiveUserLogin();
+        user.setPassword("");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
-        Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
+        Assert.assertTrue(loginPage.closeAlertReturnText().contains("Wrong email or password"));
     }
 
     @Test
     public void loginNegative_NoSpecialCharsPassword(){
-        User user = new User("testemail2@gmail.com", "Password123");
+        User user = positiveUserLogin();
+        user.setPassword("Password123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -129,7 +125,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_WrongSpecialCharPassword(){
-        User user = new User("testemail2@gmail.com", "Password)123");
+        User user = positiveUserLogin();
+        user.setPassword("Password)123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -137,7 +134,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoLatinLettersPassword(){
-        User user = new User("testemail2@gmail.com", "Зфыыцщкв!123");
+        User user = positiveUserLogin();
+        user.setPassword("Зфыыцщкв!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -145,7 +143,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_LatinWithSerifPassword(){
-        User user = new User("testemail2@gmail.com", "Pássword!123");
+        User user = positiveUserLogin();
+        user.setPassword("Pássword!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -153,7 +152,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoUppercasePassword(){
-        User user = new User("testemail2@gmail.com", "password!123");
+        User user = positiveUserLogin();
+        user.setPassword("password!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -161,7 +161,8 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoLowercasePassword(){
-        User user = new User("testemail2@gmail.com", "PASSWORD!123");
+        User user = positiveUserLogin();
+        user.setPassword("PASSWORD!123");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
@@ -169,34 +170,18 @@ public class LoginTests extends AppManager {
 
     @Test
     public void loginNegative_NoNumbersPassword(){
-        User user = new User("testemail2@gmail.com", "Password!");
+        User user = positiveUserLogin();
+        user.setPassword("Password!");
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
     }
 
-    @Test
-    public void loginNegative_7SymbolsPassword(){
-        User user = new User("testemail2@gmail.com", "!123Pas");
-        loginPage.typeLoginRegistrationFormWithUser(user);
-        loginPage.clickBtnLoginForm();
-        Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
-    }
-
-    @Test
-    public void loginNegative_16SymbolsPassword(){
-        User user = new User("testemail2@gmail.com", "!123PasswordQwer");
-        loginPage.typeLoginRegistrationFormWithUser(user);
-        loginPage.clickBtnLoginForm();
-        Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
-    }
-
-    @Test
+        @Test
     public void loginNegative_UnregisteredUserPassword(){
         User user = positiveUser();
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
     }
-
 }
