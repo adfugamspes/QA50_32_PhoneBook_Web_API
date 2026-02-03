@@ -2,6 +2,7 @@ package utils;
 
 import dto.User;
 import net.datafaker.Faker;
+import static utils.PropertiesReader.*;
 
 import java.util.Random;
 
@@ -26,6 +27,6 @@ public class UserFactory {
     }
 
     public static User positiveUserLogin(){
-        return new User("testmail123@mail.com", "Password!123");
+        return new User(getProperty("base.properties", "login"), getProperty("base.properties", "password"));
     }
 }
