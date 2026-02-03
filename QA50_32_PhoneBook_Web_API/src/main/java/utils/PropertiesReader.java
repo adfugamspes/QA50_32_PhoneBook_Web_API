@@ -17,6 +17,7 @@ public class PropertiesReader {
         } catch (IOException e) {
             System.out.println("exception created");
             e.printStackTrace();
+            return null;
         }
 
     }
