@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
+import utils.RetryAnalyser;
 import utils.UserFactory;
 
 import static utils.UserFactory.*;
@@ -28,15 +29,15 @@ public class LoginTests extends AppManager {
         loginPage = new LoginPage(getDriver());
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void loginPositiveTest () {
-        loginPage.typeLoginRegistrationForm("testmail123@mail.com", "Password!123");
+        loginPage.typeLoginRegistrationForm("testmail123@mail.com23", "Password!123");
         loginPage.clickBtnLoginForm();
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInBtnAddPresent("ADD"));
     }
 
     @Test
-    public void loginPositiveTest_WithUser () {
+    public void loginPositiveTest_WithUser() {
         User user = positiveUserLogin();
         loginPage.typeLoginRegistrationFormWithUser(user);
         loginPage.clickBtnLoginForm();
