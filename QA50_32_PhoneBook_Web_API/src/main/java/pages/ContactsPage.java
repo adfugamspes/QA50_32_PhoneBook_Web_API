@@ -1,6 +1,7 @@
 package pages;
 
 import dto.Contact;
+import dto.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,6 +37,12 @@ public class ContactsPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']/div")
     WebElement divContactsList;
+
+    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]//h2")
+    WebElement lastContactName;
+
+    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]//h3")
+    WebElement lastContactPhone;
 
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
@@ -91,5 +98,18 @@ public class ContactsPage extends BasePage {
         WheelInput.ScrollOrigin scrollOrigin = WheelInput.ScrollOrigin.fromElement(contactsList.get(0));
         pause(3);
         actions.scrollFromOrigin(scrollOrigin, 0, deltaY).perform();
+    }
+
+    public boolean isLastContactCorrect(Contact contact){
+        return lastContactName.getText().equals(contact.getName()) &&
+                lastContactPhone.getText().equals(contact.getPhone());
+    }
+
+    public boolean isTextInLastContactNamePresent(String text){
+        return isTextInElementPresent(lastContactName, text);
+    }
+
+    public boolean isTextInLastContactPhonePresent(String text){
+        return isTextInElementPresent(lastContactPhone, text);
     }
 }

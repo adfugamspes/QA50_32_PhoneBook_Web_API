@@ -5,6 +5,7 @@ import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.HeaderMenuItem;
 import static pages.BasePage.clickButtonHeader;
@@ -18,6 +19,8 @@ public class AddNewContactTests extends AppManager {
     AddContactPage addContactPage;
     int countOfContacts;
 
+    SoftAssert softAssert = new SoftAssert();
+
     @BeforeMethod
     public void login() {
         homePage = new HomePage(getDriver());
@@ -29,10 +32,8 @@ public class AddNewContactTests extends AppManager {
         addContactPage = clickButtonHeader(HeaderMenuItem.ADD);
     }
 
-    // ======================= CW9=============================
-
     @Test
-    public void addNewContactPositiveTest_WithContactsList(){
+    public void addNewContactPositiveTest_WithContactsList() {
         addContactPage.typeContactForm(positiveContact());
         addContactPage.clickBtnSaveContact();
         int countOfContactsAfterAdd = contactsPage.getContactsCount();
@@ -40,13 +41,14 @@ public class AddNewContactTests extends AppManager {
     }
 
     @Test
-    public void addNewContactPositiveTest_WithLastContact(){
+    public void addNewContactPositiveTest_WithLastContact() {
         Contact contact = positiveContact();
         addContactPage.typeContactForm(contact);
         addContactPage.clickBtnSaveContact();
 //        contactsPage.clickLastContact();
         Assert.assertTrue(contactsPage.isContactPresent(contact));
     }
+// ==============================HW8===================================
 
     @Test
     public void addNewContactPositiveTest_WithScrollToLastContact() {
@@ -54,6 +56,7 @@ public class AddNewContactTests extends AppManager {
         addContactPage.typeContactForm(contact);
         addContactPage.clickBtnSaveContact();
         contactsPage.scrollToLastContact();
+        Assert.assertTrue(contactsPage.isLastContactCorrect(contact));
     }
 
     @Test
@@ -62,5 +65,8 @@ public class AddNewContactTests extends AppManager {
         addContactPage.typeContactForm(contact);
         addContactPage.clickBtnSaveContact();
         contactsPage.scrollToLastContact_WithXY();
+        softAssert.assertTrue(contactsPage.isTextInLastContactNamePresent(contact.getName()));
+        softAssert.assertTrue(contactsPage.isTextInLastContactPhonePresent(contact.getPhone()));
+        softAssert.assertAll();
     }
 }
