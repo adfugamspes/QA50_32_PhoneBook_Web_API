@@ -44,6 +44,9 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]//h3")
     WebElement lastContactPhone;
 
+    @FindBy(xpath = "//div[@class='contact-item-detailed_card__50dTS']")
+    WebElement itemDetailCard;
+
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
     }
@@ -112,4 +115,9 @@ public class ContactsPage extends BasePage {
     public boolean isTextInLastContactPhonePresent(String text){
         return isTextInElementPresent(lastContactPhone, text);
     }
+
+    public String getContactText(){
+        return itemDetailCard.getText();
+    }
 }
+

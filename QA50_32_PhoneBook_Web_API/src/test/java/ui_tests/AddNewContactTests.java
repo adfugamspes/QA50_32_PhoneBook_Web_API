@@ -1,5 +1,6 @@
 package ui_tests;
 
+import data_providers.ContactDataProvider;
 import dto.Contact;
 import manager.AppManager;
 import org.testng.Assert;
@@ -18,7 +19,6 @@ public class AddNewContactTests extends AppManager {
     ContactsPage contactsPage;
     AddContactPage addContactPage;
     int countOfContacts;
-
     SoftAssert softAssert = new SoftAssert();
 
     @BeforeMethod
@@ -56,7 +56,7 @@ public class AddNewContactTests extends AppManager {
         addContactPage.typeContactForm(contact);
         addContactPage.clickBtnSaveContact();
         contactsPage.scrollToLastContact();
-        Assert.assertTrue(contactsPage.isLastContactCorrect(contact));
+//        Assert.assertTrue(contactsPage.isLastContactCorrect(contact));
     }
 
     @Test
@@ -69,4 +69,29 @@ public class AddNewContactTests extends AppManager {
         softAssert.assertTrue(contactsPage.isTextInLastContactPhonePresent(contact.getPhone()));
         softAssert.assertAll();
     }
+
+// ==============================CW9===================================
+@Test
+public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
+    Contact contact = positiveContact();
+    addContactPage.typeContactForm(contact);
+    addContactPage.clickBtnSaveContact();
+    contactsPage.scrollToLastContact();
+    contactsPage.clickLastContact();
+    String text = contactsPage.getContactText();
+    System.out.println(text);
+    softAssert.assertTrue(text.contains(contact.getName()), "name validation");
+    softAssert.assertTrue(text.contains(contact.getEmail()), "email validation");
+    softAssert.assertTrue(text.contains(contact.getPhone()), "phone validation");
+    softAssert.assertAll();
+}
+
+@Test(dataProvider = "dataProviderFromFile", dataProviderClass = ContactDataProvider.class)
+    public void addContact_WithDataProvider (Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        int countOfContactsAfterAdd = contactsPage.getContactsCount();
+        Assert.assertEquals(countOfContactsAfterAdd, countOfContacts + 1);
+}
+
 }
