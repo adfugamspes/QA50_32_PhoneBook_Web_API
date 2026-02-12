@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.HeaderMenuItem;
+
+import static org.openqa.selenium.devtools.v85.debugger.Debugger.pause;
 import static pages.BasePage.clickButtonHeader;
 import static utils.ContactFactory.*;
 
@@ -93,5 +95,28 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         int countOfContactsAfterAdd = contactsPage.getContactsCount();
         Assert.assertEquals(countOfContactsAfterAdd, countOfContacts + 1);
 }
+
+    //==================================HW9========================
+
+    //последний тест здесь должен падать, т.к. сохранение контакта с пустым email - это баг
+    @Test(dataProvider = "dataProviderBtnSaveInactive", dataProviderClass = ContactDataProvider.class)
+    public void addContactNegative_BtnSaveDisabled(Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        Assert.assertTrue(addContactPage.isBtnSaveContactDisplayed());
+    }
+
+    //здесь 1 тоже должен падать - сохранение мейла без точки тоже баг
+    @Test(dataProvider = "dataProviderEmptyFields_AlertPresent", dataProviderClass = ContactDataProvider.class)
+    public void addContactNegative_Alert(Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        Assert.assertTrue(addContactPage.closeAlertReturnText().contains("not valid"));
+    }
+
+
+
+
+
 
 }
