@@ -70,7 +70,7 @@ public class AddNewContactTests extends AppManager {
         softAssert.assertAll();
     }
 
-// ==============================CW9===================================
+// ==============================CW10===================================
 @Test
 public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
     Contact contact = positiveContact();
@@ -79,7 +79,7 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
     contactsPage.scrollToLastContact();
     contactsPage.clickLastContact();
     String text = contactsPage.getContactText();
-    System.out.println(text);
+//    System.out.println(text);
     softAssert.assertTrue(text.contains(contact.getName()), "name validation");
     softAssert.assertTrue(text.contains(contact.getEmail()), "email validation");
     softAssert.assertTrue(text.contains(contact.getPhone()), "phone validation");
