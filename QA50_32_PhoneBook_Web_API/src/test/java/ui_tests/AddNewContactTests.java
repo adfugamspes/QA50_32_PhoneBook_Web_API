@@ -114,6 +114,23 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         Assert.assertTrue(addContactPage.closeAlertReturnText().contains("not valid"));
     }
 
+    //==================================CW11========================
+
+    @Test(dataProvider = "dataProvider_WrongPhone", dataProviderClass = ContactDataProvider.class)
+    public void addNewContactNegative_WrongPhone(Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        Assert.assertTrue(addContactPage.closeAlertReturnText().contains("Phone not valid:"));
+    }
+
+    @Test(dataProvider = "dataProvider_EmptyFields", dataProviderClass = ContactDataProvider.class)
+    public void addNewContactNegative_EmptyFields(Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        Assert.assertTrue(addContactPage.isBtnSaveContactDisplayed());
+    }
+
+
 
 
 

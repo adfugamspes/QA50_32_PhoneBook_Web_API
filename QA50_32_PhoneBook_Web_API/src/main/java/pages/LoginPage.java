@@ -50,11 +50,5 @@ public class LoginPage extends BasePage{
         btnRegistrationForm.click();
     }
 
-    public String closeAlertReturnText(){
-        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
-        String text = alert.getText();
-        alert.accept();
-        return text;
-    }
 
 }
