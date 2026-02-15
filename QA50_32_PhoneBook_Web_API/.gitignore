@@ -20,6 +20,7 @@ out/
 /src/test/properties
 /src/test/resources/data.csv
 /src/test/resources/tests_logs
+/src/test/resources/logback.xml
 
 ### Eclipse ###
 .apt_generated
