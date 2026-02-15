@@ -145,4 +145,31 @@ public class ContactDataProvider {
         }
         return list.listIterator();
     }
+    //================================HW9======================
+
+    @DataProvider
+    public Iterator<Contact> dataProvider_WrongEmail() {
+        List<Contact> list = new ArrayList<>();
+        Contact contact = positiveContact();
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(new FileReader
+                             ("src/test/resources/data.csv/dp_wrong_email.csv"))) {
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                list.add(Contact.builder().name(contact.getName())
+                        .lastName(contact.getLastName())
+                        .email(line)
+                        .phone(contact.getPhone())
+                        .address(contact.getAddress())
+                        .description(contact.getDescription())
+                        .build());
+                line = bufferedReader.readLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("IO exception");
+        }
+        return list.listIterator();
+    }
 }

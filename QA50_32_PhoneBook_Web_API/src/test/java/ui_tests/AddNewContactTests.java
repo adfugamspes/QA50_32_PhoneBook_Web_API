@@ -23,6 +23,7 @@ public class AddNewContactTests extends AppManager {
     int countOfContacts;
     SoftAssert softAssert = new SoftAssert();
 
+
     @BeforeMethod
     public void login() {
         homePage = new HomePage(getDriver());
@@ -96,7 +97,7 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         Assert.assertEquals(countOfContactsAfterAdd, countOfContacts + 1);
 }
 
-    //==================================HW9========================
+    //==================================HW8========================
 
     //последний тест здесь должен падать, т.к. сохранение контакта с пустым email - это баг
     @Test(dataProvider = "dataProviderBtnSaveInactive", dataProviderClass = ContactDataProvider.class)
@@ -130,10 +131,15 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         Assert.assertTrue(addContactPage.isBtnSaveContactDisplayed());
     }
 
+    //==================================HW9========================
 
-
-
-
-
+    @Test(dataProvider = "dataProvider_WrongEmail", dataProviderClass = ContactDataProvider.class)
+    public void addNewContactNegative_WrongEmail(Contact contact){
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        softAssert.assertTrue(addContactPage.closeAlertReturnText().contains("Email not valid:"));
+        softAssert.assertTrue(getDriver().getCurrentUrl().contains("add"));
+        softAssert.assertAll();
+    }
 
 }
