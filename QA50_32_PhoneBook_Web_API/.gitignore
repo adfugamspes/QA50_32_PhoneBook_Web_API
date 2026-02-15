@@ -19,7 +19,7 @@ out/
 !**/src/test/**/out/
 /src/test/properties
 /src/test/resources/data.csv
-src/test/resources/tests_logs
+/src/test/resources/tests_logs
 
 ### Eclipse ###
 .apt_generated
