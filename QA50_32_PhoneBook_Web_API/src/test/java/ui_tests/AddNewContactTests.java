@@ -10,6 +10,8 @@ import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.HeaderMenuItem;
 
+import java.lang.reflect.Method;
+
 import static org.openqa.selenium.devtools.v85.debugger.Debugger.pause;
 import static pages.BasePage.clickButtonHeader;
 import static utils.ContactFactory.*;
@@ -140,6 +142,16 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         softAssert.assertTrue(addContactPage.closeAlertReturnText().contains("Email not valid:"));
         softAssert.assertTrue(getDriver().getCurrentUrl().contains("add"));
         softAssert.assertAll();
+    }
+
+    @Test
+    public void addNewContactPositiveTest_WithLogger(Method method) {
+        Contact contact = positiveContact();
+        logger.info("start test " + method.getName() + "with contact " + contact);
+        addContactPage.typeContactForm(contact);
+        addContactPage.clickBtnSaveContact();
+        int countOfContactsAfterAdd = contactsPage.getContactsCount();
+        Assert.assertEquals(countOfContactsAfterAdd, countOfContacts + 1);
     }
 
 }
