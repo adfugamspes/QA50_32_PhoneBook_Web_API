@@ -3,12 +3,16 @@ package ui_tests;
 import data_providers.ContactDataProvider;
 import dto.Contact;
 import manager.AppManager;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.HeaderMenuItem;
+import utils.TestNGListener;
+import utils.WDListener;
 
 import java.lang.reflect.Method;
 
@@ -16,6 +20,7 @@ import static org.openqa.selenium.devtools.v85.debugger.Debugger.pause;
 import static pages.BasePage.clickButtonHeader;
 import static utils.ContactFactory.*;
 
+@Listeners({TestNGListener.class})
 
 public class AddNewContactTests extends AppManager {
     HomePage homePage;

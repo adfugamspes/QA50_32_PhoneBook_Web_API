@@ -1,7 +1,6 @@
 package pages;
 
 import dto.Contact;
-import dto.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ContactsPage extends BasePage {
 
@@ -35,6 +35,9 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]")
     WebElement lastContact;
 
+    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM']")
+    WebElement firstContact;
+
     @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']/div")
     WebElement divContactsList;
 
@@ -47,6 +50,12 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//div[@class='contact-item-detailed_card__50dTS']")
     WebElement itemDetailCard;
 
+    @FindBy(xpath = "//button[text()='Remove']")
+    WebElement btnRemoveContact;
+
+    @FindBy(xpath = "//button[text()='Edit']")
+    WebElement btnEditContact;
+
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
     }
@@ -55,33 +64,33 @@ public class ContactsPage extends BasePage {
         return isElementDisplayed(btnAddContact);
     }
 
-    public boolean isTextInBtnSignOutPresent(String text){
+    public boolean isTextInBtnSignOutPresent(String text) {
         return isTextInElementPresent(btnSignOut, text);
     }
 
-    public boolean isTextInBtnAddPresent(String text){
+    public boolean isTextInBtnAddPresent(String text) {
         return isTextInElementPresent(btnAddContact, text);
     }
 
-    public boolean isTextInContactPageMessagePresent (String text){
+    public boolean isTextInContactPageMessagePresent(String text) {
         return isTextInElementPresent(contactPageMessage, text);
     }
 
-    public void clickBtnSignOut(){
+    public void clickBtnSignOut() {
         btnSignOut.click();
     }
 
-    public int getContactsCount(){
+    public int getContactsCount() {
         return contactsList.size();
     }
 
-    public void clickLastContact(){
+    public void clickLastContact() {
         lastContact.click();
     }
 
-    public boolean isContactPresent(Contact contact){
-        for (WebElement element : contactsList){
-            if (element.getText().contains(contact.getName()) || element.getText().contains(contact.getPhone())){
+    public boolean isContactPresent(Contact contact) {
+        for (WebElement element : contactsList) {
+            if (element.getText().contains(contact.getName()) || element.getText().contains(contact.getPhone())) {
                 System.out.println(element.getText());
                 return true;
             }
@@ -89,12 +98,22 @@ public class ContactsPage extends BasePage {
         return false;
     }
 
-    public void scrollToLastContact(){
+    public boolean isContactPresent(String text) {
+        for (WebElement element : contactsList) {
+            if (element.getText().contains(text)) {
+                System.out.println(element.getText());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void scrollToLastContact() {
         Actions actions = new Actions(driver);
         actions.scrollToElement(lastContact).perform();
     }
 
-    public void scrollToLastContact_WithXY(){
+    public void scrollToLastContact_WithXY() {
         Actions actions = new Actions(driver);
         int deltaY = divContactsList.getSize().getHeight();
         System.out.println("Height = " + deltaY);
@@ -103,21 +122,43 @@ public class ContactsPage extends BasePage {
         actions.scrollFromOrigin(scrollOrigin, 0, deltaY).perform();
     }
 
-    public boolean isLastContactCorrect(Contact contact){
+    public boolean isLastContactCorrect(Contact contact) {
         return lastContactName.getText().equals(contact.getName()) &&
                 lastContactPhone.getText().equals(contact.getPhone());
     }
 
-    public boolean isTextInLastContactNamePresent(String text){
+    public boolean isTextInLastContactNamePresent(String text) {
         return isTextInElementPresent(lastContactName, text);
     }
 
-    public boolean isTextInLastContactPhonePresent(String text){
+    public boolean isTextInLastContactPhonePresent(String text) {
         return isTextInElementPresent(lastContactPhone, text);
     }
 
-    public String getContactText(){
+    public String getContactText() {
         return itemDetailCard.getText();
+    }
+
+    public String getContactTextByIndex(int index){
+        WebElement element = contactsList.get(index);
+        return element.getText();
+    }
+
+    public String deleteContactByIndex(int index) {
+        if (index < 0 || index >= contactsList.size())
+            throw new IndexOutOfBoundsException();
+        WebElement element = contactsList.get(index);
+        String deletedContactText = getContactTextByIndex(index);
+        contactsList.get(index).click();
+        btnRemoveContact.click();
+        pause(3);
+        return deletedContactText;
+    }
+
+    public void editFirstContact(){
+        itemDetailCard.click();
+        btnEditContact.click();
+
     }
 }
 
