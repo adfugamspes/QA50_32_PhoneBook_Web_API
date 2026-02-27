@@ -1,11 +1,14 @@
 package utils;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
 
 public class WDListener implements WebDriverListener {
 
@@ -63,5 +66,11 @@ public class WDListener implements WebDriverListener {
     public void afterSendKeys(WebElement element, CharSequence... keysToSend) {
         WebDriverListener.super.afterSendKeys(element, keysToSend);
         logger.info("use SendKeys to element {} type {}", element.getTagName(), keysToSend );
+    }
+
+    @Override
+    public void afterAnyAlertCall(Alert alert, Method method, Object[] args, Object result) {
+        WebDriverListener.super.afterAnyAlertCall(alert, method, args, result);
+        logger.info("alert --> ", alert.toString() );
     }
 }

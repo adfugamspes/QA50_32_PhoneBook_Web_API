@@ -56,6 +56,22 @@ public class ContactsPage extends BasePage {
     @FindBy(xpath = "//button[text()='Edit']")
     WebElement btnEditContact;
 
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[1]")
+    WebElement inputName;
+
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[2]")
+    WebElement inputLastName;
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[3]")
+    WebElement inputPhone;
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[4]")
+    WebElement inputEmail;
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[5]")
+    WebElement inputAddress;
+    @FindBy(xpath = "//div[@class='form_form__FOqHs']/input[6]")
+    WebElement inputDescription;
+    @FindBy(xpath = "//button[text()='Save']")
+    WebElement btnSave;
+
     public boolean isBtnSignOutDisplayed() {
         return isElementDisplayed(btnSignOut);
     }
@@ -155,10 +171,31 @@ public class ContactsPage extends BasePage {
         return deletedContactText;
     }
 
-    public void editFirstContact(){
-        itemDetailCard.click();
-        btnEditContact.click();
+    //====================CW14==============================================
 
+    public void deleteFirstContact(){
+        contactsList.get(0).click();
+        btnRemoveContact.click();
     }
+
+    public void typeEditForm(Contact contact){
+        contactsList.get(0).click();
+        btnEditContact.click();
+        inputName.clear();
+        inputName.sendKeys(contact.getName());
+        inputLastName.clear();
+        inputLastName.sendKeys(contact.getLastName());
+        inputPhone.clear();
+        inputPhone.sendKeys(contact.getPhone());
+        inputEmail.clear();
+        inputEmail.sendKeys(contact.getEmail());
+        inputAddress.clear();
+        inputAddress.sendKeys(contact.getAddress());
+        inputDescription.clear();
+        inputDescription.sendKeys(contact.getDescription());
+        btnSave.click();
+    }
+
+
 }
 

@@ -5,16 +5,19 @@ import manager.AppManager;
 import net.datafaker.Faker;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
+import utils.TestNGListener;
 import utils.UserFactory;
 
 import java.util.Random;
 
 import static utils.UserFactory.*;
 
+@Listeners({TestNGListener.class})
 public class RegistrationTests extends AppManager {
 
     LoginPage loginPage;

@@ -10,6 +10,7 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
+import data_providers.ContactDataProvider.*;
 
 import static pages.BasePage.clickButtonHeader;
 
@@ -42,4 +43,15 @@ public class DeleteContactTests extends AppManager {
         softAssert.assertFalse(contactsPage.isContactPresent(deletedContact));
         softAssert.assertAll();
     }
+
+    //==============================CW14===============================
+    @Test
+    public void deleteFirstContact(){
+        countOfContacts = contactsPage.getContactsCount();
+        contactsPage.deleteFirstContact();
+        contactsPage.pause(3);
+        int countContactsAfterDelete = contactsPage.getContactsCount();
+        Assert.assertEquals(countContactsAfterDelete, countOfContacts - 1);
+    }
+
 }
