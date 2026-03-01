@@ -71,6 +71,6 @@ public class WDListener implements WebDriverListener {
     @Override
     public void afterAnyAlertCall(Alert alert, Method method, Object[] args, Object result) {
         WebDriverListener.super.afterAnyAlertCall(alert, method, args, result);
-        logger.info("alert --> ", alert.toString() );
+        logger.info("alert --> ", alert.toString());
     }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -155,30 +156,14 @@ public class ContactsPage extends BasePage {
         return itemDetailCard.getText();
     }
 
-    public String getContactTextByIndex(int index){
-        WebElement element = contactsList.get(index);
-        return element.getText();
-    }
+//====================CW14==============================================
 
-    public String deleteContactByIndex(int index) {
-        if (index < 0 || index >= contactsList.size())
-            throw new IndexOutOfBoundsException();
-        WebElement element = contactsList.get(index);
-        String deletedContactText = getContactTextByIndex(index);
-        contactsList.get(index).click();
-        btnRemoveContact.click();
-        pause(3);
-        return deletedContactText;
-    }
-
-    //====================CW14==============================================
-
-    public void deleteFirstContact(){
+    public void deleteFirstContact() {
         contactsList.get(0).click();
         btnRemoveContact.click();
     }
 
-    public void typeEditForm(Contact contact){
+    public void typeEditForm(Contact contact) {
         contactsList.get(0).click();
         btnEditContact.click();
         inputName.clear();
@@ -195,7 +180,5 @@ public class ContactsPage extends BasePage {
         inputDescription.sendKeys(contact.getDescription());
         btnSave.click();
     }
-
-
 }
 

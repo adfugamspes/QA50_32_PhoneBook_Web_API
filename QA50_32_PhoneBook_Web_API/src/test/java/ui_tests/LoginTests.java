@@ -8,16 +8,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyser;
+import utils.TestNGListener;
 import utils.UserFactory;
 
 import static utils.UserFactory.*;
 import java.time.Duration;
+@Listeners({TestNGListener.class})
 
 public class LoginTests extends AppManager {
 

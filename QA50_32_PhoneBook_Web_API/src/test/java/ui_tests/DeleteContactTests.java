@@ -1,9 +1,11 @@
 package ui_tests;
 
+import dto.Contact;
 import manager.AppManager;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.ContactsPage;
@@ -11,8 +13,11 @@ import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
 import data_providers.ContactDataProvider.*;
+import utils.TestNGListener;
+import static utils.PropertiesReader.*;
 
 import static pages.BasePage.clickButtonHeader;
+@Listeners({TestNGListener.class})
 
 public class DeleteContactTests extends AppManager {
 
@@ -27,27 +32,16 @@ public class DeleteContactTests extends AppManager {
     public void goToContactsPage() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
-        loginPage.typeLoginRegistrationForm("testmail123@mail.com", "Password!123");
+        loginPage.typeLoginRegistrationForm(getProperty("base.properties", "login"), getProperty("base.properties", "password"));
         loginPage.clickBtnLoginForm();
         contactsPage = new ContactsPage((getDriver()));
+        countOfContacts = contactsPage.getContactsCount();
    }
 
-    @Test
-    public void deleteContactByIndexPositiveTest(){
-        int countBefore = contactsPage.getContactsCount();
-        String contactToDelete = contactsPage.getContactTextByIndex(5);
-        String deletedContact = contactsPage.deleteContactByIndex(5);
-        int countAfter = contactsPage.getContactsCount();
-        softAssert.assertEquals(countAfter, countBefore - 1);
-        softAssert.assertEquals(contactToDelete, deletedContact);
-        softAssert.assertFalse(contactsPage.isContactPresent(deletedContact));
-        softAssert.assertAll();
-    }
+//==============================CW14===============================//
 
-    //==============================CW14===============================
     @Test
-    public void deleteFirstContact(){
-        countOfContacts = contactsPage.getContactsCount();
+    public void deleteFirstContactPositiveTest(){
         contactsPage.deleteFirstContact();
         contactsPage.pause(3);
         int countContactsAfterDelete = contactsPage.getContactsCount();

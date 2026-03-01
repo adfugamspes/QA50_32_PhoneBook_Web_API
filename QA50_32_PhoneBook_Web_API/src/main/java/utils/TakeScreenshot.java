@@ -11,10 +11,6 @@ import java.util.Date;
 
 public class TakeScreenshot {
 
-    public static void main(String[] args) {
-        System.out.println(createFileName());
-    }
-
     public static void takeScreenshot(TakesScreenshot screenshot){
         String filename = createFileName();
         File screenFile = screenshot.getScreenshotAs(OutputType.FILE);
@@ -33,6 +29,6 @@ public class TakeScreenshot {
         System.out.println(date);
         String currentDate = formatter.format(date);
         System.out.println(currentDate);
-        return "src/test/resources/tests_logs/screenshots/scrrenshot-" + currentDate + ".png";
+        return "src/test/resources/tests_logs/screenshots/scr-" + currentDate + ".png";
     }
 }
