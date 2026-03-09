@@ -27,7 +27,7 @@ public class LoginTests extends AppManager {
     LoginPage loginPage;
     UserFactory faker;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToRegistrationPage() {
         new HomePage(getDriver()).clickBtnLogin();
         loginPage = new LoginPage(getDriver());
@@ -40,7 +40,7 @@ public class LoginTests extends AppManager {
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInBtnAddPresent("ADD"));
     }
 
-    @Test
+    @Test(groups = {"smoke", "user"})
     public void loginPositiveTest_WithUser() {
         User user = positiveUserLogin();
         loginPage.typeLoginRegistrationFormWithUser(user);
@@ -56,7 +56,7 @@ public class LoginTests extends AppManager {
         Assert.assertEquals(loginPage.closeAlertReturnText(), "Wrong email or password");
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void loginNegative_BlankEmail(){
         User user = positiveUserLogin();
         user.setUsername("");

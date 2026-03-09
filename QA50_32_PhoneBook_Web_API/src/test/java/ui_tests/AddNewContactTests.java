@@ -32,7 +32,7 @@ public class AddNewContactTests extends AppManager {
     SoftAssert softAssert = new SoftAssert();
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         homePage = new HomePage(getDriver());
         loginPage = clickButtonHeader(HeaderMenuItem.LOGIN);
@@ -43,7 +43,7 @@ public class AddNewContactTests extends AppManager {
         addContactPage = clickButtonHeader(HeaderMenuItem.ADD);
     }
 
-    @Test
+    @Test(groups = {"smoke", "contact"})
     @Feature("Add new contact")
     public void addNewContactPositiveTest_WithContactsList() {
         addContactPage.typeContactForm(positiveContact());
@@ -135,7 +135,7 @@ public void addNewContactPositiveTest_ComparisonWithLastContactCard(){
         Assert.assertTrue(addContactPage.closeAlertReturnText().contains("Phone not valid:"));
     }
 
-    @Test(dataProvider = "dataProvider_EmptyFields", dataProviderClass = ContactDataProvider.class)
+    @Test(groups = {"negative"}, dataProvider = "dataProvider_EmptyFields", dataProviderClass = ContactDataProvider.class)
     public void addNewContactNegative_EmptyFields(Contact contact){
         addContactPage.typeContactForm(contact);
         addContactPage.clickBtnSaveContact();

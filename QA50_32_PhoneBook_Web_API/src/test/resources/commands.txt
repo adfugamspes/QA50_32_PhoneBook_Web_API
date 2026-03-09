@@ -1,0 +1,7 @@
+.\gradlew clean smoketests
+.\gradlew clean smoke_contact_tests
+.\gradlew clean smoke_negative_tests
+
+//terminal commands
+cd Z:\Tel Ran\QA_automation\QA50_32_PhoneBook_Web_API
+
