@@ -2,6 +2,8 @@ package manager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.slf4j.Logger;
@@ -16,16 +18,30 @@ import java.time.LocalTime;
 
 public class AppManager {
     public final static Logger logger = LoggerFactory.getLogger(AppManager.class);
+
+    static String browser = System.getProperty("browser", "chrome");
+
     private WebDriver driver;
 
-    public WebDriver getDriver(){
+    public WebDriver getDriver() {
         return driver;
     }
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         logger.info("Start testing " + LocalDate.now() + " : " + LocalTime.now());
-        driver = new ChromeDriver();
+        switch (browser.toLowerCase()){
+            case "firefox": driver = new FirefoxDriver();
+                System.out.println("FireFox driver is chosen");
+                break;
+            case "edge": driver = new EdgeDriver();
+                System.out.println("Edge driver is chosen");
+                break;
+            case "chrome": driver = new ChromeDriver();
+                System.out.println("Chrome driver is chosen");
+                break;
+        }
+//        driver = new ChromeDriver();
         driver.manage().window().maximize();
 //        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         WebDriverListener webDriverListener = new WDListener();
@@ -37,7 +53,7 @@ public class AppManager {
     @AfterMethod(enabled = true, alwaysRun = true)
     public void tearDown() {
         logger.info("Stop testing " + LocalDate.now() + " : " + LocalTime.now());
-        if(driver != null)
+        if (driver != null)
             driver.quit();
     }
 
