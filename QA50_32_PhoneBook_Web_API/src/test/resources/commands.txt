@@ -1,7 +1,12 @@
-.\gradlew clean smoketests
-.\gradlew clean smoke_contact_tests
-.\gradlew clean smoke_negative_tests
+//команды для запуска задач из терминала
+// вызываем файл-оболочку, очищаем отчеты и название задачи
+// для вызова через треминал сначала перейти в папку проекта
 
-//terminal commands
-cd Z:\Tel Ran\QA_automation\QA50_32_PhoneBook_Web_API
+.\gradlew clean smoke_tests
+.\gradlew clean smoke_contact_tests
+.\gradlew clean negative_tests
+.\gradlew clean different_tests -Dsuite=smoke_contact_tests
+
+cd Z:
+cd "Tel Ran\QA_automation\QA50_32_PhoneBook_Web_API\QA50_32_PhoneBook_Web_API"
 

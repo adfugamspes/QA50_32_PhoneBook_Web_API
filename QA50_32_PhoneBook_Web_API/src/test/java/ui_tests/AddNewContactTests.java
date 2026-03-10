@@ -44,7 +44,6 @@ public class AddNewContactTests extends AppManager {
     }
 
     @Test(groups = {"smoke", "contact"})
-    @Feature("Add new contact")
     public void addNewContactPositiveTest_WithContactsList() {
         addContactPage.typeContactForm(positiveContact());
         addContactPage.clickBtnSaveContact();
@@ -53,7 +52,6 @@ public class AddNewContactTests extends AppManager {
     }
 
     @Test
-    @Feature("Add new contact")
     public void addNewContactPositiveTest_WithLastContact() {
         Contact contact = positiveContact();
         addContactPage.typeContactForm(contact);
@@ -64,7 +62,6 @@ public class AddNewContactTests extends AppManager {
 // ==============================HW8===================================
 
     @Test
-    @Feature("Add new contact")
     public void addNewContactPositiveTest_WithScrollToLastContact() {
         Contact contact = positiveContact();
         addContactPage.typeContactForm(contact);

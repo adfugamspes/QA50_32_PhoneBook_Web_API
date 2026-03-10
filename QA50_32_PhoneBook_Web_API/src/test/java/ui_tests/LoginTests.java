@@ -48,7 +48,7 @@ public class LoginTests extends AppManager {
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInBtnSignOutPresent("Sign Out"));
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void loginNegativeTest_WrongEmail(){
         User user = new User("testmail123ail.com", "Password!123");
         loginPage.typeLoginRegistrationFormWithUser(user);

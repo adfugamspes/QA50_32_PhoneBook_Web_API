@@ -46,7 +46,7 @@ public class RegistrationTests extends AppManager {
         Assert.assertTrue(new ContactsPage(getDriver()).isTextInContactPageMessagePresent("No Contacts here!"));
     }
 
-    @Test(groups = {"negtative"})
+    @Test(groups = {"negative"})
     public void registrationNegativeTest_BlankEmail() {
         User user = positiveUser();
         user.setUsername("");
@@ -55,7 +55,7 @@ public class RegistrationTests extends AppManager {
         Assert.assertTrue(loginPage.closeAlertReturnText().contains("Email must contains"));
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void registrationNegativeTest_BlankEmailAndPassword() {
         User user = positiveUser();
         user.setUsername("");
