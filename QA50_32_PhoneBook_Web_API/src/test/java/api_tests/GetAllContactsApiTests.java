@@ -1,8 +1,10 @@
 package api_tests;
 
+import dto.ContactsDto;
 import dto.ErrorMessageDto;
 import dto.TokenDto;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -11,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import utils.BaseApi;
 import utils.ILogin;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GetAllContactsApiTests implements BaseApi, ILogin {
@@ -30,6 +33,8 @@ public class GetAllContactsApiTests implements BaseApi, ILogin {
                 .get()
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            ContactsDto contactsDto = GSON.fromJson(response.body().string(), ContactsDto.class);
+            System.out.println(contactsDto);
             Assert.assertEquals(response.code(), 200);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -53,5 +58,8 @@ public class GetAllContactsApiTests implements BaseApi, ILogin {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
 }
