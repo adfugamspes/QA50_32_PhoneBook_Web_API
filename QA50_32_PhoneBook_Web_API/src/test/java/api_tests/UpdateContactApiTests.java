@@ -38,36 +38,37 @@ public class UpdateContactApiTests implements BaseApi, ILogin {
                 .addHeader(AUTH, token.getToken())
                 .post(requestBody)
                 .build();
-        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()){
-            if (response.code() == 200){
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            if (response.code() == 200) {
                 ResponseMessageDto responseMessageDto = GSON.fromJson(response.body().string(), ResponseMessageDto.class);
                 System.out.println(responseMessageDto.getMessage());
                 contactId = responseMessageDto.getMessage().split("ID: ")[1];
                 System.out.println(contactId);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Exception is created");
         }
     }
+
     @Test
-    public void updateContactPositiveApiTest(){
-            Contact contact = positiveContact();
-            contact.setId(contactId);
-            RequestBody requestBody = RequestBody.create(GSON.toJson(contact), JSON);
-            Request request = new Request.Builder()
-                    .url(BASE_URL + EDIT_CONTACT_URL)
-                    .addHeader(AUTH, token.getToken())
-                    .put(requestBody)
-                    .build();
-            try (Response response = OK_HTTP_CLIENT.newCall(request).execute()){
-                softAssert.assertEquals(response.code(), 200, "validate status code");
-                ResponseMessageDto responseMessageDto = GSON.fromJson(response.body().string(), ResponseMessageDto.class);
-                softAssert.assertTrue(responseMessageDto.getMessage().contains("Contact was updated"), "validate message");
-                softAssert.assertAll();
-            } catch (IOException e){
-                e.printStackTrace();
-                System.out.println("Exception is created");
-            }
+    public void updateContactPositiveApiTest() {
+        Contact contact = positiveContact();
+        contact.setId(contactId);
+        RequestBody requestBody = RequestBody.create(GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + EDIT_CONTACT_URL)
+                .addHeader(AUTH, token.getToken())
+                .put(requestBody)
+                .build();
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            softAssert.assertEquals(response.code(), 200, "validate status code");
+            ResponseMessageDto responseMessageDto = GSON.fromJson(response.body().string(), ResponseMessageDto.class);
+            softAssert.assertTrue(responseMessageDto.getMessage().contains("Contact was updated"), "validate message");
+            softAssert.assertAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Exception is created");
+        }
     }
 }

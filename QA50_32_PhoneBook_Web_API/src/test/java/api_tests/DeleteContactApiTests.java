@@ -26,13 +26,13 @@ public class DeleteContactApiTests implements BaseApi, ILogin {
     }
 
     @BeforeMethod
-    public void get_first_contact_id(){
+    public void get_first_contact_id() {
         Request request = new Request.Builder()
-                .url(BASE_URL+GET_ALL_CONTACTS_URL)
+                .url(BASE_URL + GET_ALL_CONTACTS_URL)
                 .addHeader(AUTH, token.getToken())
                 .get()
                 .build();
-        try(Response response = OK_HTTP_CLIENT.newCall(request).execute()){
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             ContactsDto contactsDto = GSON.fromJson(response.body().string(), ContactsDto.class);
             contactId = contactsDto.getContacts().get(0).getId();
         } catch (IOException e) {
@@ -41,19 +41,16 @@ public class DeleteContactApiTests implements BaseApi, ILogin {
     }
 
     @Test
-    public void deleteContactByIdPositiveApiTest(){
+    public void deleteContactByIdPositiveApiTest() {
         Request request = new Request.Builder()
-                .url(BASE_URL+DELETE_CONTACT_URL+contactId)
+                .url(BASE_URL + DELETE_CONTACT_URL + contactId)
                 .addHeader(AUTH, token.getToken())
                 .delete()
                 .build();
-        try(Response response = OK_HTTP_CLIENT.newCall(request).execute()){
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             Assert.assertEquals(response.code(), 200);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }
